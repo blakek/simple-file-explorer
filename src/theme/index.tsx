@@ -1,7 +1,7 @@
-import { createTheme, DefaultGlobalStyles, defaultTheme } from '@gsandf/ui';
-import React from 'react';
-import { createGlobalStyle } from 'styled-components';
-import * as componentStyles from './component-styles';
+import { createTheme, DefaultGlobalStyles, defaultTheme } from "@gsandf/ui";
+import React from "react";
+import { createGlobalStyle } from "styled-components";
+import * as componentStyles from "./component-styles";
 
 /**
  * Add global styles here. This is mainly used for styling general HTML elements.
@@ -40,19 +40,19 @@ const globalStyles = () => (
 export const theme = createTheme({
   colors: {
     ...defaultTheme.colors,
-    primary: 'tan',
-    onPrimary: '#121'
+    primary: "tan",
+    onPrimary: "#121",
   },
   components: {
     Button: {
       baseStyle: componentStyles.baseButtonStyles,
       variants: {
         dark: componentStyles.buttonVariantDark,
-        control: componentStyles.buttonVariantControl
-      }
-    }
+        control: componentStyles.buttonVariantControl,
+      },
+    },
   },
-  styles: globalStyles
+  styles: globalStyles,
 });
 
 export const {
@@ -71,7 +71,7 @@ export const {
   sizes,
   space,
   styles,
-  zIndices
+  zIndices,
 } = theme;
 
 export default theme;

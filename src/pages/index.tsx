@@ -1,18 +1,18 @@
-import { BasicGrid, Box, Container, Flex, Text } from '@gsandf/ui';
-import Link from 'next/link';
-import React from 'react';
-import { Card, Header } from '../components/Demo';
-import BasicLayout from '../templates/Basic';
+import { BasicGrid, Box, Container, Flex, Text } from "@gsandf/ui";
+import Link from "next/link";
+import React from "react";
+import { Card, Header } from "../components/Demo";
+import BasicLayout from "../templates/Basic";
 
 export default function Home(): JSX.Element {
   return (
     <BasicLayout
-      keywords={['example', 'site', 'GS&F']}
+      keywords={["example", "site", "GS&F"]}
       metaDescription="Welcome to a hackable site starter"
       title="GS&amp;F Site Starter | Home"
     >
       <Flex as="header" $justifyContent="center" $bgColor="darken" $py={40}>
-        <Box $px={[4, 5]} $maxWidth={['full', '600px']}>
+        <Box $px={[4, 5]} $maxWidth={["full", "600px"]}>
           <Header>Welcome to a hackable site starter</Header>
         </Box>
       </Flex>
@@ -20,8 +20,8 @@ export default function Home(): JSX.Element {
       <Container $px={2} $py={4}>
         <p>
           Next.js will serve each file in <code>/pages</code> under a pathname
-          matching the filename. For example making a file at{' '}
-          <code>/pages/about.tsx</code> would be served at{' '}
+          matching the filename. For example making a file at{" "}
+          <code>/pages/about.tsx</code> would be served at{" "}
           <Link href="/about">
             <a>/about</a>
           </Link>

@@ -1,5 +1,5 @@
-import Head from 'next/head';
-import React from 'react';
+import Head from "next/head";
+import React from "react";
 
 export interface BasicTemplateProps {
   children: React.ReactNode;
@@ -14,9 +14,9 @@ function Basic({
   keywords = [],
   metaDescription,
   socialMediaImage,
-  title
+  title,
 }: BasicTemplateProps): JSX.Element {
-  const metaKeywords = Array.isArray(keywords) ? keywords.join(',') : '';
+  const metaKeywords = Array.isArray(keywords) ? keywords.join(",") : "";
 
   return (
     <>

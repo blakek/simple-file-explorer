@@ -1,1 +1,2 @@
-module.exports = require('amper-scripts/config/prettier.config.js');
+// Use defaults
+module.exports = {};

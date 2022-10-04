@@ -1,8 +1,8 @@
-import { Button, Center, Container, Flex } from '@gsandf/ui';
-import Link from 'next/link';
-import React from 'react';
-import { Header } from '../components/Demo';
-import BasicLayout from '../templates/Basic';
+import { Button, Center, Container, Flex } from "@gsandf/ui";
+import Link from "next/link";
+import React from "react";
+import { Header } from "../components/Demo";
+import BasicLayout from "../templates/Basic";
 
 export default function About() {
   return (
@@ -14,7 +14,7 @@ export default function About() {
         $justifyContent="center"
         $py={40}
       >
-        <Container $px={8} $maxWidth={['full', '600px']}>
+        <Container $px={8} $maxWidth={["full", "600px"]}>
           <Header>This is an example About Page</Header>
         </Container>
 

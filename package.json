@@ -1,0 +1,58 @@
+{
+  "name": "simple-file-explorer",
+  "version": "0.0.1",
+  "private": true,
+  "author": "GS&F Devs <mindreactor@gsandf.com> (https://gsandf.com/)",
+  "license": "UNLICENSED",
+  "ava": {
+    "extensions": [
+      "js",
+      "ts"
+    ],
+    "files": [
+      "src/**/*.test.ts"
+    ],
+    "ignoredByWatcher": [
+      "!src/**"
+    ],
+    "require": [
+      "./.ava-entry.js"
+    ]
+  },
+  "dependencies": {
+    "@blakek/deep": "^4.0.0",
+    "@gsandf/ui": "^0.4.0-beta.1",
+    "next": "^12.3.1",
+    "polished": "^4.2.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-is": "^18.2.0",
+    "styled-components": "^5.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^18.8.2",
+    "@types/react": "^18.0.21",
+    "@types/styled-components": "^5.1.26",
+    "amper-scripts": "^1.2.4",
+    "ava": "^4.3.3",
+    "babel-plugin-styled-components": "^2.0.7",
+    "eslint-config-next": "^12.3.1",
+    "npm-run-all": "^4.1.5",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
+  },
+  "engines": {
+    "node": "18.x"
+  },
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "format-check": "amper-scripts format-check .",
+    "format": "amper-scripts format-write .",
+    "lint": "amper-scripts lint .",
+    "start": "next start",
+    "test": "ava",
+    "typeCheck": "tsc --noEmit",
+    "validate": "run-p format-check lint typeCheck"
+  }
+}

@@ -1,22 +1,16 @@
-import signature from "lib/signature";
-import NextApp from "next/app";
-import React from "react";
+import { AppProps } from "next/app";
 import { ThemeProvider } from "styled-components";
 import theme from "theme/index";
 
-export default class App extends NextApp {
-  componentDidMount() {
-    signature();
-  }
+export default function App(props: AppProps) {
+  const { Component, pageProps } = props;
 
-  render() {
-    const { Component, pageProps } = this.props;
-
-    return (
-      <ThemeProvider theme={theme}>
-        <theme.styles />
-        <Component {...pageProps} />
-      </ThemeProvider>
-    );
-  }
+  return (
+    // @ts-ignore - This _is_ a JSX component; not sure why type is wrong
+    <ThemeProvider theme={theme}>
+      {/* @ts-ignore - This _is_ a JSX component; not sure why type is wrong */}
+      <theme.styles />
+      <Component {...pageProps} />
+    </ThemeProvider>
+  );
 }

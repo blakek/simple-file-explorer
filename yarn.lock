@@ -1236,6 +1236,11 @@ css-to-react-native@^3.0.0:
     css-color-keywords "^1.0.0"
     postcss-value-parser "^4.0.2"
 
+css.gg@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/css.gg/-/css.gg-2.0.0.tgz#1ba891092ceac58a2550540171c2d469a86b27b2"
+  integrity sha512-8qO59kSXLbewo7xaUM4eC8328MTdGmb8atpmw6PRzeDGsZrCkAVjJzKeFDIntagl1/aCee+NG1OQtIvWAjgG/A==
+
 csstype@^3.0.2:
   version "3.0.7"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.7.tgz#2a5fb75e1015e84dd15692f71e89a1450290950b"

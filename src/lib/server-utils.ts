@@ -2,7 +2,7 @@ import { Dirent, Stats } from "node:fs";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { fileTypes } from "./get-file-type.server";
+import { fileTypes } from "./mime";
 import { FileType, FSNode } from "./types";
 
 const rawFsRoot = process.env.FS_ROOT ?? process.cwd();
@@ -19,18 +19,26 @@ export function resolvePath(relativePath: string): string {
 
 const fileTreeCache = new Map<string, FSNode>();
 
-function getFileType(fileName: string, isDirectory: boolean): FileType {
+function getMimeInfo(
+  fileName: string,
+  isDirectory: boolean
+): Pick<FSNode, "mimeType" | "type"> {
   if (isDirectory) {
-    return FileType.Directory;
+    return {
+      type: FileType.Directory,
+    };
   }
 
   const ext = path.extname(fileName).toLowerCase().slice(1);
 
   if (ext in fileTypes) {
-    return fileTypes[ext];
+    return {
+      mimeType: fileTypes[ext].mimeType,
+      type: fileTypes[ext].fileType,
+    };
   }
 
-  return FileType.Unknown;
+  return { type: FileType.Unknown };
 }
 
 async function getFileTreeRecursive(
@@ -43,10 +51,10 @@ async function getFileTreeRecursive(
   const isDirectory = file.isDirectory();
 
   const node: FSNode = {
+    isDirectory,
     name: fileName,
     path: path.relative(fsRoot, filePath),
-    isDirectory,
-    type: getFileType(fileName, isDirectory),
+    ...getMimeInfo(fileName, isDirectory),
   };
 
   if (isDirectory) {

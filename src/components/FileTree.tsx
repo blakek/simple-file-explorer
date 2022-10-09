@@ -1,5 +1,6 @@
 import * as Icons from "css.gg/icons/all";
 import { FileType, FSNode } from "lib/types";
+import Link from "next/link";
 import styled from "styled-components";
 
 export interface FileProps {
@@ -21,18 +22,35 @@ const IconMap: Record<FileType, keyof typeof Icons> = {
 
 const FileWrapper = styled.div`
   align-items: center;
+  cursor: pointer;
   display: flex;
   gap: 0.5rem;
+  padding: 0.15rem;
+
+  &:hover {
+    background-color: #eee;
+  }
 `;
+
+export function MusicFile({ file }: FileProps) {
+  return (
+    <FileWrapper>
+      <Icons.Music />
+      {file.name}
+    </FileWrapper>
+  );
+}
 
 export function File(props: FileProps) {
   const Icon = Icons[IconMap[props.file.type]];
 
   return (
-    <FileWrapper>
-      <Icon />
-      {props.file.name}
-    </FileWrapper>
+    <Link href={props.file.path}>
+      <FileWrapper>
+        <Icon />
+        {props.file.name}
+      </FileWrapper>
+    </Link>
   );
 }
 

@@ -12,5 +12,6 @@ export interface FSNode {
   isDirectory: boolean;
   name: string;
   path: string;
+  mimeType?: string;
   type: FileType;
 }

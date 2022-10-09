@@ -27,30 +27,25 @@ async function getFileTreeRecursive(
   const fileName = file instanceof Dirent ? file.name : parentPath;
   const isDirectory = file.isDirectory();
 
-  let additionalProps = {};
-
-  if (isDirectory) {
-    const childNodes = await fs.readdir(filePath, { withFileTypes: true });
-
-    additionalProps = {
-      children: await Promise.all(
-        childNodes.flatMap((child) => {
-          if (child.name.startsWith(".")) {
-            return [];
-          }
-
-          return getFileTreeRecursive(child, filePath);
-        })
-      ),
-    };
-  }
-
   const node: FSNode = {
     name: fileName,
     path: filePath,
     isDirectory,
-    ...additionalProps,
   };
+
+  if (isDirectory) {
+    const childNodes = await fs.readdir(filePath, { withFileTypes: true });
+
+    node.children = await Promise.all(
+      childNodes.flatMap((child) => {
+        if (child.name.startsWith(".")) {
+          return [];
+        }
+
+        return getFileTreeRecursive(child, filePath);
+      })
+    );
+  }
 
   fileTreeCache.set(filePath, node);
   return node;

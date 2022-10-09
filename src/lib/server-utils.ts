@@ -44,7 +44,7 @@ async function getFileTreeRecursive(
 
   const node: FSNode = {
     name: fileName,
-    path: filePath,
+    path: path.relative(fsRoot, filePath),
     isDirectory,
     type: getFileType(fileName, isDirectory),
   };

@@ -41,13 +41,10 @@ export function MediaPlayer(props: MediaPlayerProps) {
   const MediaElement =
     props.file.type === FileType.Audio ? AudioPlayer : VideoPlayer;
 
-  const mediaPlayerRef = React.useRef<
-    HTMLAudioElement | HTMLVideoElement | null
-  >();
+  const mediaPlayerRef = React.useRef<any>();
 
   React.useEffect(() => {
     mediaPlayerRef.current?.load();
-    // mediaPlayerRef.current?.play();
 
     return () => {
       mediaPlayerRef.current?.pause();
@@ -63,7 +60,6 @@ export function MediaPlayer(props: MediaPlayerProps) {
           {props.file.name}
         </Text>
 
-        {/* ts-ignore - ref should work with either element */}
         <MediaElement controls ref={mediaPlayerRef}>
           <source
             src={`/api/file?path=${encodeURIComponent(props.file.path)}`}

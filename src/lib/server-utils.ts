@@ -64,5 +64,5 @@ export async function getFileTree(): Promise<FSNode> {
     );
   }
 
-  return Promise.resolve(fileTreeCache.get(fsRoot)!);
+  return fileTreeCache.get(fsRoot)!;
 }

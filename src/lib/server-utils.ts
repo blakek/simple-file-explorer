@@ -2,13 +2,7 @@ import { Dirent, Stats } from "node:fs";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-
-type FSNode = {
-  name: string;
-  path: string;
-  isDirectory: boolean;
-  children?: FSNode[];
-};
+import { FSNode } from "./types";
 
 const rawFsRoot = process.env.FS_ROOT ?? process.cwd();
 

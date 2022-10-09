@@ -2,7 +2,8 @@ import { Dirent, Stats } from "node:fs";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { FSNode } from "./types";
+import { fileTypes } from "./get-file-type.server";
+import { FileType, FSNode } from "./types";
 
 const rawFsRoot = process.env.FS_ROOT ?? process.cwd();
 
@@ -18,6 +19,20 @@ export function resolvePath(relativePath: string): string {
 
 const fileTreeCache = new Map<string, FSNode>();
 
+function getFileType(fileName: string, isDirectory: boolean): FileType {
+  if (isDirectory) {
+    return FileType.Directory;
+  }
+
+  const ext = path.extname(fileName).toLowerCase().slice(1);
+
+  if (ext in fileTypes) {
+    return fileTypes[ext];
+  }
+
+  return FileType.Unknown;
+}
+
 async function getFileTreeRecursive(
   file: Dirent | Stats,
   parentPath: string
@@ -31,6 +46,7 @@ async function getFileTreeRecursive(
     name: fileName,
     path: filePath,
     isDirectory,
+    type: getFileType(fileName, isDirectory),
   };
 
   if (isDirectory) {

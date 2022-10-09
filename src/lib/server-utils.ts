@@ -40,7 +40,13 @@ async function getFileTreeRecursive(
 
     additionalProps = {
       children: await Promise.all(
-        childNodes.map((child) => getFileTreeRecursive(child, filePath))
+        childNodes.flatMap((child) => {
+          if (child.name.startsWith(".")) {
+            return [];
+          }
+
+          return getFileTreeRecursive(child, filePath);
+        })
       ),
     };
   }

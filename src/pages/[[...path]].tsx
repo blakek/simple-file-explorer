@@ -1,4 +1,5 @@
 import { Container } from "@gsandf/ui";
+import { FileTree } from "components/FileTree";
 import { getFileTree, resolvePath } from "lib/server-utils";
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import BasicLayout from "../templates/Basic";
@@ -7,9 +8,11 @@ export default function Home(
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) {
   return (
-    <BasicLayout title="TODO">
+    <BasicLayout title={props.fileTree.path}>
       <Container $p={3}>
-        <pre>{JSON.stringify(props, null, 2)}</pre>
+        {props.fileTree.children?.map((file) => (
+          <FileTree fileTree={file} />
+        ))}
       </Container>
     </BasicLayout>
   );

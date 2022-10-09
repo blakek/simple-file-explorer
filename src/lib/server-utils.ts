@@ -1,3 +1,4 @@
+import { Dirent, Stats } from "node:fs";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -23,40 +24,44 @@ export function resolvePath(relativePath: string): string {
 
 const fileTreeCache = new Map<string, FSNode>();
 
-async function getFileTreeRecursive(currentRoot: string) {
-  const files = await fs.readdir(currentRoot, { withFileTypes: true });
-  const visibleFiles = files.filter((file) => !file.name.startsWith("."));
+async function getFileTreeRecursive(
+  file: Dirent | Stats,
+  parentPath: string
+): Promise<FSNode> {
+  const filePath =
+    file instanceof Dirent ? path.join(parentPath, file.name) : parentPath;
+  const fileName = file instanceof Dirent ? file.name : parentPath;
+  const isDirectory = file.isDirectory();
 
-  return await Promise.all(
-    visibleFiles.map(async (file) => {
-      const filePath = path.join(currentRoot, file.name);
-      const isDirectory = file.isDirectory();
+  let additionalProps = {};
 
-      const node: FSNode = {
-        isDirectory: isDirectory,
-        name: file.name,
-        path: filePath,
-      };
+  if (isDirectory) {
+    const childNodes = await fs.readdir(filePath, { withFileTypes: true });
 
-      if (isDirectory) {
-        node.children = await getFileTreeRecursive(filePath);
-      }
+    additionalProps = {
+      children: await Promise.all(
+        childNodes.map((child) => getFileTreeRecursive(child, filePath))
+      ),
+    };
+  }
 
-      fileTreeCache.set(filePath, node);
+  const node: FSNode = {
+    name: fileName,
+    path: filePath,
+    isDirectory,
+    ...additionalProps,
+  };
 
-      return node;
-    })
-  );
+  fileTreeCache.set(filePath, node);
+  return node;
 }
 
 export async function getFileTree(): Promise<FSNode> {
   if (!fileTreeCache.has(fsRoot)) {
-    fileTreeCache.set(fsRoot, {
-      children: await getFileTreeRecursive(fsRoot),
-      isDirectory: true,
-      name: fsRoot,
-      path: fsRoot,
-    });
+    fileTreeCache.set(
+      fsRoot,
+      await getFileTreeRecursive(await fs.stat(fsRoot), fsRoot)
+    );
   }
 
   return Promise.resolve(fileTreeCache.get(fsRoot)!);

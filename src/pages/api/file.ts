@@ -31,7 +31,7 @@ export default async (
   if (req.headers.range) {
     const rangeParts = req.headers.range.split("=")[1].split("-");
     const start = parseInt(rangeParts[0], 10);
-    const end = parseInt(rangeParts[1], 10) ?? fileStats.size - 1;
+    const end = parseInt(rangeParts[1], 10) || fileStats.size - 1;
 
     fileStream = fs.createReadStream(filePath, { start, end });
 
@@ -50,4 +50,10 @@ export default async (
   }
 
   fileStream.pipe(res);
+};
+
+export const config = {
+  api: {
+    responseLimit: false,
+  },
 };

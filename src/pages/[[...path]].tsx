@@ -1,5 +1,6 @@
-import { Container, Stack } from "@gsandf/ui";
+import { Container } from "@gsandf/ui";
 import { FileTree } from "components/FileTree";
+import { MediaPlayer } from "components/MediaPlayer";
 import { getFileTree, resolvePath } from "lib/server-utils";
 import { FSNode } from "lib/types";
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
@@ -14,33 +15,13 @@ export default function Home(
 
   return (
     <BasicLayout title={props.fileTree.path}>
-      <Stack direction="row">
-        <Container $p={3}>
-          {props.fileTree.children?.map((file) => (
-            <FileTree key={file.path} fileTree={file} />
-          ))}
-        </Container>
+      <Container $p={3}>
+        {props.fileTree.children?.map((file) => (
+          <FileTree key={file.path} fileTree={file} />
+        ))}
+      </Container>
 
-        <Container $p={3}>
-          {selectedFile.type === "audio" && (
-            <audio controls>
-              <source
-                src={`/api/file?path=${encodeURIComponent(selectedFile.path)}`}
-                type={selectedFile.mimeType}
-              />
-            </audio>
-          )}
-
-          {selectedFile.type === "video" && (
-            <video controls>
-              <source
-                src={`/api/file?path=${encodeURIComponent(selectedFile.path)}`}
-                type={selectedFile.mimeType}
-              />
-            </video>
-          )}
-        </Container>
-      </Stack>
+      <MediaPlayer file={selectedFile} />
     </BasicLayout>
   );
 }

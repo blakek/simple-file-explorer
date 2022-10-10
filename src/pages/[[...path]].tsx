@@ -17,7 +17,11 @@ export default function Home(
     <BasicLayout title={props.fileTree.path}>
       <Container $p={3}>
         {props.fileTree.children?.map((file) => (
-          <FileTree key={file.path} fileTree={file} />
+          <FileTree
+            key={file.path}
+            fileTree={file}
+            selectedFile={selectedFile}
+          />
         ))}
       </Container>
 

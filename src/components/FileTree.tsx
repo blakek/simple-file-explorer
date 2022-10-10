@@ -1,14 +1,17 @@
 import * as Icons from "css.gg/icons/all";
 import { FileType, FSNode } from "lib/types";
 import Link from "next/link";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export interface FileProps {
+  children?: React.ReactNode;
   file: FSNode;
+  isSelected?: boolean;
 }
 
 export interface FileTreeProps {
   fileTree: FSNode;
+  selectedFile?: FSNode;
 }
 
 const IconMap: Record<FileType, keyof typeof Icons> = {
@@ -20,7 +23,7 @@ const IconMap: Record<FileType, keyof typeof Icons> = {
   [FileType.Video]: "Camera",
 };
 
-const FileDetails = styled.div`
+const FileDetails = styled.div<{ isSelected?: boolean }>`
   align-items: center;
   cursor: pointer;
   display: flex;
@@ -28,8 +31,16 @@ const FileDetails = styled.div`
   list-style: none;
   padding: 0.25rem 0.5rem;
 
+  ${(props) =>
+    props.isSelected &&
+    css`
+      background-color: ${props.theme.colors.primary};
+      color: ${props.theme.colors.onPrimary};
+    `}
+
   &:hover {
-    background-color: #eee;
+    background-color: ${(props) => props.theme.colors.darken};
+    color: ${(props) => props.theme.colors.onDarken};
   }
 `;
 
@@ -50,14 +61,14 @@ export function MusicFile({ file }: FileProps) {
   );
 }
 
-export function File(props: FileProps & { children?: React.ReactNode }) {
+export function File(props: FileProps) {
   const Icon = Icons[IconMap[props.file.type]];
 
   return (
     <>
       <Link href={props.file.path}>
         <FileWrapper>
-          <FileDetails>
+          <FileDetails isSelected={props.isSelected}>
             <Icon />
             {props.file.name}
           </FileDetails>
@@ -70,12 +81,25 @@ export function File(props: FileProps & { children?: React.ReactNode }) {
 }
 
 export function FileTree(props: FileTreeProps) {
+  console.log({
+    fileTree: props.fileTree,
+    selectedFile: props.selectedFile,
+    isSelected: props.fileTree.path === props.selectedFile?.path,
+  });
+
   return (
-    <File file={props.fileTree}>
+    <File
+      file={props.fileTree}
+      isSelected={props.selectedFile?.path === props.fileTree.path}
+    >
       {props.fileTree.children && (
         <ul style={{ margin: 0, padding: 0 }}>
           {props.fileTree.children.map((child) => (
-            <FileTree key={child.path} fileTree={child} />
+            <FileTree
+              key={child.path}
+              fileTree={child}
+              selectedFile={props.selectedFile}
+            />
           ))}
         </ul>
       )}

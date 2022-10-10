@@ -1,6 +1,10 @@
-import { createTheme, DefaultGlobalStyles, defaultTheme } from "@gsandf/ui";
+import {
+  CreatedTheme,
+  createTheme,
+  DefaultGlobalStyles,
+  defaultTheme,
+} from "@gsandf/ui";
 import { createGlobalStyle } from "styled-components";
-import * as componentStyles from "./component-styles";
 
 /**
  * Add global styles here. This is mainly used for styling general HTML elements.
@@ -41,23 +45,12 @@ const globalStyles = () => {
   );
 };
 
-export const theme = createTheme({
-  colors: {
-    ...defaultTheme.colors,
-    primary: "tan",
-    onPrimary: "#121",
-  },
-  components: {
-    Button: {
-      baseStyle: componentStyles.baseButtonStyles,
-      variants: {
-        dark: componentStyles.buttonVariantDark,
-        control: componentStyles.buttonVariantControl,
-      },
-    },
-  },
+const themeOverrides = {
+  ...defaultTheme,
   styles: globalStyles,
-});
+};
+
+export const theme = createTheme(themeOverrides);
 
 export const {
   breakpoints,
@@ -79,3 +72,9 @@ export const {
 } = theme;
 
 export default theme;
+
+type FileExplorerTheme = CreatedTheme<typeof themeOverrides>;
+
+declare module "styled-components" {
+  interface DefaultTheme extends FileExplorerTheme {}
+}

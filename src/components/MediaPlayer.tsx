@@ -14,8 +14,9 @@ const VideoPlayer = styled.video`
 `;
 
 const Bar = styled(Stack)`
-  background-color: ${(props) => props.theme.colors.primary};
+  background-color: ${(props) => props.theme.colors.accent};
   bottom: 0;
+  color: ${(props) => props.theme.colors.onAccent};
   display: flex;
   justify-content: center;
   left: 0;

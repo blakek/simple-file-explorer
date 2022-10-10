@@ -1,5 +1,4 @@
 import { createTheme, DefaultGlobalStyles, defaultTheme } from "@gsandf/ui";
-import React from "react";
 import { createGlobalStyle } from "styled-components";
 import * as componentStyles from "./component-styles";
 
@@ -30,12 +29,17 @@ const GlobalStyles = createGlobalStyle`
  * createTheme({ styles: GlobalStyles })
  * ```
  */
-const globalStyles = () => (
-  <>
-    <DefaultGlobalStyles />
-    <GlobalStyles />
-  </>
-);
+const globalStyles = () => {
+  const DefaultStyles = DefaultGlobalStyles as any;
+  const OverrideStyles = GlobalStyles as any;
+
+  return (
+    <>
+      <DefaultStyles />
+      <OverrideStyles />
+    </>
+  );
+};
 
 export const theme = createTheme({
   colors: {

@@ -1,15 +1,14 @@
 import { Box, Button, Flex, Text } from "@gsandf/ui";
 import { NextPageContext } from "next";
 import Link from "next/link";
-import React from "react";
 import BasicLayout from "../templates/Basic";
 
-const statusCodes = {
+const statusCodes: Record<number, string> = {
   400: "Bad Request",
   404: "This page could not be found",
   405: "Method Not Allowed",
   500: "Internal Server Error",
-} as const;
+};
 
 function Error({ statusCode }: ErrorProps) {
   const reasonText =

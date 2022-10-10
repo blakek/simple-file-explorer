@@ -1,3 +1,4 @@
+import { Text } from "@gsandf/ui";
 import * as Icons from "css.gg/icons/all";
 import { FileType, FSNode } from "lib/types";
 import Link from "next/link";
@@ -29,7 +30,7 @@ const FileDetails = styled.div<{ isSelected?: boolean }>`
   display: flex;
   gap: 0.5rem;
   list-style: none;
-  padding: 0.25rem 0.5rem;
+  padding: 0.25rem 1rem;
 
   ${(props) =>
     props.isSelected &&
@@ -70,7 +71,7 @@ export function File(props: FileProps) {
         <FileWrapper>
           <FileDetails isSelected={props.isSelected}>
             <Icon />
-            {props.file.name}
+            <Text maxLineCount={1}>{props.file.name}</Text>
           </FileDetails>
 
           {props.children}

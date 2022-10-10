@@ -53,7 +53,7 @@ async function getFileTreeRecursive(
   const node: FSNode = {
     isDirectory,
     name: fileName,
-    path: path.relative(fsRoot, filePath),
+    path: path.sep + path.relative(fsRoot, filePath),
     ...getMimeInfo(fileName, isDirectory),
   };
 

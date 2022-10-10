@@ -75,12 +75,6 @@ export function File(props: FileProps) {
 }
 
 export function FileTree(props: FileTreeProps) {
-  console.log({
-    fileTree: props.fileTree,
-    selectedFile: props.selectedFile,
-    isSelected: props.fileTree.path === props.selectedFile?.path,
-  });
-
   return (
     <File
       file={props.fileTree}

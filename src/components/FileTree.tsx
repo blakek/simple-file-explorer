@@ -1,7 +1,7 @@
 import { Text } from "@gsandf/ui";
-import * as Icons from "css.gg/icons/all";
 import { FileType, FSNode } from "lib/types";
 import Link from "next/link";
+import * as Icons from "react-icons/fi";
 import styled, { css } from "styled-components";
 
 export interface FileProps {
@@ -16,12 +16,12 @@ export interface FileTreeProps {
 }
 
 const IconMap: Record<FileType, keyof typeof Icons> = {
-  [FileType.Audio]: "Music",
-  [FileType.Directory]: "Folder",
-  [FileType.Image]: "Image",
-  [FileType.Text]: "FileDocument",
-  [FileType.Unknown]: "File",
-  [FileType.Video]: "Camera",
+  [FileType.Audio]: "FiMusic",
+  [FileType.Directory]: "FiFolder",
+  [FileType.Image]: "FiImage",
+  [FileType.Text]: "FiFileText",
+  [FileType.Unknown]: "FiFile",
+  [FileType.Video]: "FiVideo",
 };
 
 const FileDetails = styled.div<{ isSelected?: boolean }>`
@@ -53,17 +53,10 @@ const FileWrapper = styled.li`
   padding-left: 2rem;
 `;
 
-export function MusicFile({ file }: FileProps) {
-  return (
-    <FileWrapper>
-      <Icons.Music />
-      {file.name}
-    </FileWrapper>
-  );
-}
-
 export function File(props: FileProps) {
-  const Icon = Icons[IconMap[props.file.type]];
+  const Icon = props.isSelected
+    ? Icons.FiPlayCircle
+    : Icons[IconMap[props.file.type]];
 
   return (
     <>

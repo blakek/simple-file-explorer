@@ -22,11 +22,11 @@
   "dependencies": {
     "@blakek/deep": "^4.0.0",
     "@gsandf/ui": "^0.4.0-beta.1",
-    "css.gg": "^2.0.0",
     "next": "^12.3.1",
     "polished": "^4.2.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-icons": "^4.4.0",
     "react-is": "^18.2.0",
     "styled-components": "^5.3.6"
   },

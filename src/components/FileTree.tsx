@@ -20,16 +20,25 @@ const IconMap: Record<FileType, keyof typeof Icons> = {
   [FileType.Video]: "Camera",
 };
 
-const FileWrapper = styled.div`
+const FileDetails = styled.div`
   align-items: center;
   cursor: pointer;
   display: flex;
   gap: 0.5rem;
-  padding: 0.15rem;
+  list-style: none;
+  padding: 0.25rem 0.5rem;
 
   &:hover {
     background-color: #eee;
   }
+`;
+
+const FileWrapper = styled.li`
+  align-items: center;
+  cursor: pointer;
+  gap: 0.5rem;
+  list-style: none;
+  padding-left: 2rem;
 `;
 
 export function MusicFile({ file }: FileProps) {
@@ -41,30 +50,35 @@ export function MusicFile({ file }: FileProps) {
   );
 }
 
-export function File(props: FileProps) {
+export function File(props: FileProps & { children?: React.ReactNode }) {
   const Icon = Icons[IconMap[props.file.type]];
 
   return (
-    <Link href={props.file.path}>
-      <FileWrapper>
-        <Icon />
-        {props.file.name}
-      </FileWrapper>
-    </Link>
+    <>
+      <Link href={props.file.path}>
+        <FileWrapper>
+          <FileDetails>
+            <Icon />
+            {props.file.name}
+          </FileDetails>
+
+          {props.children}
+        </FileWrapper>
+      </Link>
+    </>
   );
 }
 
 export function FileTree(props: FileTreeProps) {
   return (
-    <li style={{ listStyle: "none" }}>
-      <File file={props.fileTree} />
+    <File file={props.fileTree}>
       {props.fileTree.children && (
-        <ul>
+        <ul style={{ margin: 0, padding: 0 }}>
           {props.fileTree.children.map((child) => (
             <FileTree key={child.path} fileTree={child} />
           ))}
         </ul>
       )}
-    </li>
+    </File>
   );
 }

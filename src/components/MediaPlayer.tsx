@@ -53,7 +53,7 @@ export function MediaPlayer(props: MediaPlayerProps) {
 
   return (
     <>
-      <Box $height="50vh" $width="full" />
+      <Box $height="calc(40vmin + 5rem)" $width="full" />
 
       <Bar>
         <Text $fontSize={3} $fontWeight="bolder">

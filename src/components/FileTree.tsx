@@ -60,7 +60,7 @@ export function File(props: FileProps) {
 
   return (
     <>
-      <Link href={props.file.path}>
+      <Link href={props.file.path} scroll={false}>
         <FileWrapper>
           <FileDetails isSelected={props.isSelected}>
             <Icon />

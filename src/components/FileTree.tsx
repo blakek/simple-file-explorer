@@ -6,7 +6,7 @@ import { FileIcon } from "./FileIcon";
 
 export interface FileProps {
   children?: React.ReactNode;
-  depth?: number;
+  depth: number;
   file: FSNode;
   isSelected: boolean;
 }
@@ -66,7 +66,7 @@ export function File(props: FileProps) {
 export function FileTree(props: FileTreeProps) {
   return (
     <File
-      depth={props.depth}
+      depth={props.depth ?? 0}
       file={props.fileTree}
       isSelected={props.selectedFile?.path === props.fileTree.path}
     >

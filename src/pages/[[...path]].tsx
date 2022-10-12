@@ -15,7 +15,7 @@ export default function Home(
 
   return (
     <BasicLayout title={props.fileTree.path}>
-      <Container $p={3}>
+      <Container $p={2}>
         {props.fileTree.children?.map((file) => (
           <FileTree
             key={file.path}

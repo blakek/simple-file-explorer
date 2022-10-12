@@ -12,7 +12,7 @@ export interface FileProps {
 }
 
 export interface FileTreeProps {
-  depth?: number;
+  depth: number;
   fileTree: FSNode;
   selectedFile?: FSNode;
 }
@@ -24,7 +24,7 @@ const FileDetails = styled.div<{ depth: number; isSelected?: boolean }>`
   gap: 0.5rem;
   list-style: none;
   padding: 0.25rem 1rem;
-  padding-left: ${(props) => props.depth * 2}rem;
+  padding-left: ${(props) => (props.depth + 1) * 1.2}rem;
 
   ${(props) =>
     props.isSelected &&
@@ -74,7 +74,7 @@ export function FileTree(props: FileTreeProps) {
         <ul style={{ margin: 0, padding: 0 }}>
           {props.fileTree.children.map((child) => (
             <FileTree
-              depth={props.depth ? props.depth + 1 : 1}
+              depth={props.depth + 1}
               key={child.path}
               fileTree={child}
               selectedFile={props.selectedFile}

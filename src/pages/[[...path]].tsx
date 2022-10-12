@@ -22,6 +22,7 @@ export default function Home(
       <Container $p={3}>
         {props.fileTree.children?.map((file) => (
           <FileTree
+            depth={0}
             key={file.path}
             fileTree={file}
             selectedFile={selectedFile}

@@ -1,28 +1,19 @@
 import { Text } from "@gsandf/ui";
-import { FileType, FSNode } from "lib/types";
+import { FSNode } from "lib/types";
 import Link from "next/link";
-import * as Icons from "react-icons/fi";
 import styled, { css } from "styled-components";
+import { FileIcon } from "./FileIcon";
 
 export interface FileProps {
   children?: React.ReactNode;
   file: FSNode;
-  isSelected?: boolean;
+  isSelected: boolean;
 }
 
 export interface FileTreeProps {
   fileTree: FSNode;
   selectedFile?: FSNode;
 }
-
-const IconMap: Record<FileType, keyof typeof Icons> = {
-  [FileType.Audio]: "FiMusic",
-  [FileType.Directory]: "FiFolder",
-  [FileType.Image]: "FiImage",
-  [FileType.Text]: "FiFileText",
-  [FileType.Unknown]: "FiFile",
-  [FileType.Video]: "FiVideo",
-};
 
 const FileDetails = styled.div<{ isSelected?: boolean }>`
   align-items: center;
@@ -54,16 +45,12 @@ const FileWrapper = styled.li`
 `;
 
 export function File(props: FileProps) {
-  const Icon = props.isSelected
-    ? Icons.FiPlayCircle
-    : Icons[IconMap[props.file.type]];
-
   return (
     <>
       <Link href={props.file.path} scroll={false}>
         <FileWrapper>
           <FileDetails isSelected={props.isSelected}>
-            <Icon />
+            <FileIcon file={props.file} isSelected={props.isSelected} />
             <Text maxLineCount={1}>{props.file.name}</Text>
           </FileDetails>
 

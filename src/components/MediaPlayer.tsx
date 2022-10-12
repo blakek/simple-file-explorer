@@ -46,6 +46,7 @@ export function MediaPlayer(props: MediaPlayerProps) {
 
   React.useEffect(() => {
     mediaPlayerRef.current?.load();
+    mediaPlayerRef.current?.play();
 
     return () => {
       mediaPlayerRef.current?.pause();

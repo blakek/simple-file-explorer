@@ -13,9 +13,13 @@ export default function Home(
     return tree.children?.find((child) => child.name === pathPart) ?? tree;
   }, props.fileTree as FSNode);
 
+  const title = selectedFile.isDirectory
+    ? selectedFile.path
+    : selectedFile.name;
+
   return (
     <BasicLayout title={props.fileTree.path}>
-      <Container $p={2}>
+      <Container $p={3}>
         {props.fileTree.children?.map((file) => (
           <FileTree
             key={file.path}

@@ -18,7 +18,7 @@ export default function Home(
     : selectedFile.name;
 
   return (
-    <BasicLayout title={props.fileTree.path}>
+    <BasicLayout title={title}>
       <Container $p={3}>
         {props.fileTree.children?.map((file) => (
           <FileTree

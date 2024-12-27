@@ -48,28 +48,28 @@ const FileWrapper = styled.li<{ depth?: number }>`
 
 export function File(props: FileProps) {
   return (
-    <>
-      <Link href={props.file.path} scroll={false}>
-        <FileWrapper>
-          <FileDetails depth={props.depth} isSelected={props.isSelected}>
-            <FileIcon file={props.file} isSelected={props.isSelected} />
-            <Text maxLineCount={1}>{props.file.name}</Text>
-          </FileDetails>
+    <Link href={props.file.path} scroll={false}>
+      <FileWrapper>
+        <FileDetails depth={props.depth} isSelected={props.isSelected}>
+          <FileIcon file={props.file} isSelected={props.isSelected} />
+          <Text maxLineCount={1}>{props.file.name}</Text>
+        </FileDetails>
 
-          {props.children}
-        </FileWrapper>
-      </Link>
-    </>
+        {props.children}
+      </FileWrapper>
+    </Link>
   );
 }
 
 export function FileTree(props: FileTreeProps) {
   return (
-    <File
-      depth={props.depth ?? 0}
-      file={props.fileTree}
-      isSelected={props.selectedFile?.path === props.fileTree.path}
-    >
+    <>
+      <File
+        depth={props.depth ?? 0}
+        file={props.fileTree}
+        isSelected={props.selectedFile?.path === props.fileTree.path}
+      />
+
       {props.fileTree.children && (
         <ul style={{ margin: 0, padding: 0 }}>
           {props.fileTree.children.map((child) => (
@@ -82,6 +82,6 @@ export function FileTree(props: FileTreeProps) {
           ))}
         </ul>
       )}
-    </File>
+    </>
   );
 }

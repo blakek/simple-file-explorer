@@ -3,13 +3,10 @@ import React from "react";
 
 export interface BasicTemplateProps {
   children: React.ReactNode;
-  keywords?: string[];
-  metaDescription?: string;
-  socialMediaImage?: string;
   title?: string;
 }
 
-function Basic({ children, title }: BasicTemplateProps): JSX.Element {
+function Basic({ children, title }: BasicTemplateProps) {
   return (
     <>
       <Head>

@@ -2,7 +2,6 @@ import { Container } from "@gsandf/ui";
 import { FileTree } from "components/FileTree";
 import { MediaPlayer } from "components/MediaPlayer";
 import { getFileTree, resolvePath } from "lib/server-utils";
-import { FSNode } from "lib/types";
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import BasicLayout from "../templates/Basic";
 
@@ -11,7 +10,7 @@ export default function Home(
 ) {
   const selectedFile = props.pathParts.reduce((tree, pathPart) => {
     return tree.children?.find((child) => child.name === pathPart) ?? tree;
-  }, props.fileTree as FSNode);
+  }, props.fileTree);
 
   const title = selectedFile.isDirectory
     ? selectedFile.path

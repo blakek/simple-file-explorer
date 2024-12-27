@@ -34,13 +34,10 @@ const GlobalStyles = createGlobalStyle`
  * ```
  */
 const globalStyles = () => {
-  const DefaultStyles = DefaultGlobalStyles as any;
-  const OverrideStyles = GlobalStyles as any;
-
   return (
     <>
-      <DefaultStyles />
-      <OverrideStyles />
+      <DefaultGlobalStyles />
+      <GlobalStyles />
     </>
   );
 };

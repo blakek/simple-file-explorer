@@ -30,8 +30,8 @@ export default async (
 
   if (req.headers.range) {
     const rangeParts = req.headers.range.split("=")[1].split("-");
-    const start = parseInt(rangeParts[0], 10);
-    const end = parseInt(rangeParts[1], 10) || fileStats.size - 1;
+    const start = parseInt(rangeParts[0]);
+    const end = parseInt(rangeParts[1]) || fileStats.size - 1;
 
     fileStream = fs.createReadStream(filePath, { start, end });
 

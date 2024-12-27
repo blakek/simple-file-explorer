@@ -35,23 +35,29 @@ export function MediaPlayer(props: MediaPlayerProps) {
   const isKnownMediaFile =
     props.file.type === FileType.Audio || props.file.type === FileType.Video;
 
-  if (!isKnownMediaFile) {
-    return null;
-  }
+  const mediaPlayerRef = React.useRef<HTMLMediaElement>(null);
 
   const MediaElement =
     props.file.type === FileType.Audio ? AudioPlayer : VideoPlayer;
 
-  const mediaPlayerRef = React.useRef<any>();
-
   React.useEffect(() => {
-    mediaPlayerRef.current?.load();
-    mediaPlayerRef.current?.play();
+    const currentMediaElement = mediaPlayerRef.current;
+
+    if (!currentMediaElement) {
+      return;
+    }
+
+    currentMediaElement.load();
+    currentMediaElement.play();
 
     return () => {
-      mediaPlayerRef.current?.pause();
+      currentMediaElement.pause();
     };
   }, [props.file]);
+
+  if (!isKnownMediaFile) {
+    return null;
+  }
 
   return (
     <>
@@ -62,7 +68,7 @@ export function MediaPlayer(props: MediaPlayerProps) {
           {props.file.name}
         </Text>
 
-        <MediaElement controls ref={mediaPlayerRef}>
+        <MediaElement controls ref={mediaPlayerRef as any}>
           <source
             src={`/api/file?path=${encodeURIComponent(props.file.path)}`}
             type={props.file.mimeType}

@@ -28,11 +28,11 @@
   "scripts": {
     "build": "bun exec --bun next build",
     "dev": "bun exec --bun next dev",
-    "format-check": "amper-scripts format-check .",
-    "format": "amper-scripts format-write .",
-    "lint": "amper-scripts lint .",
+    "format-check": "prettier --check .",
+    "format": "prettier --write .",
+    "lint": "eslint . --ext .ts,.tsx",
     "start": "bun exec --bun next start",
     "typecheck": "tsc --noEmit",
-    "validate": "bun format-check && bun lint && bun typecheck"
+    "validate": "bun format-check && bun typecheck && bun lint"
   }
 }

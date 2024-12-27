@@ -15,10 +15,7 @@ function Error({ statusCode }: ErrorProps) {
     statusCodes[statusCode] ?? "An unexpected error has occurred";
 
   return (
-    <BasicLayout
-      metaDescription=""
-      title={`${statusCode} Error - ${reasonText}`}
-    >
+    <BasicLayout title={`${statusCode} Error - ${reasonText}`}>
       <Flex
         $alignItems="center"
         $direction="column"

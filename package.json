@@ -1,24 +1,9 @@
 {
   "name": "simple-file-explorer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
-  "author": "GS&F Devs <mindreactor@gsandf.com> (https://gsandf.com/)",
+  "author": "Blake Knight <oss.ideas@gmail.com> (https://blakek.me)",
   "license": "UNLICENSED",
-  "ava": {
-    "extensions": [
-      "js",
-      "ts"
-    ],
-    "files": [
-      "src/**/*.test.ts"
-    ],
-    "ignoredByWatcher": [
-      "!src/**"
-    ],
-    "require": [
-      "./.ava-entry.js"
-    ]
-  },
   "dependencies": {
     "@blakek/deep": "^4.0.0",
     "@gsandf/ui": "^0.4.0-beta.1",
@@ -43,15 +28,15 @@
     "typescript": "^4.8.4"
   },
   "engines": {
-    "node": "18.x"
+    "node": ">=18.x"
   },
   "scripts": {
-    "build": "next build",
-    "dev": "next dev",
+    "build": "bun exec --bun next build",
+    "dev": "bun exec --bun next dev",
     "format-check": "amper-scripts format-check .",
     "format": "amper-scripts format-write .",
     "lint": "amper-scripts lint .",
-    "start": "next start",
+    "start": "bun exec --bun next start",
     "test": "ava",
     "typeCheck": "tsc --noEmit",
     "validate": "run-p format-check lint typeCheck"

@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 export interface MediaPlayerProps {
   file: FSNode;
+  mediaPlayerRef: React.RefObject<HTMLAudioElement | HTMLVideoElement | null>;
 }
 
 const AudioPlayer = styled.audio``;
@@ -35,25 +36,8 @@ export function MediaPlayer(props: MediaPlayerProps) {
   const isKnownMediaFile =
     props.file.type === FileType.Audio || props.file.type === FileType.Video;
 
-  const mediaPlayerRef = React.useRef<HTMLMediaElement>(null);
-
   const MediaElement =
     props.file.type === FileType.Audio ? AudioPlayer : VideoPlayer;
-
-  React.useEffect(() => {
-    const currentMediaElement = mediaPlayerRef.current;
-
-    if (!currentMediaElement) {
-      return;
-    }
-
-    currentMediaElement.load();
-    currentMediaElement.play();
-
-    return () => {
-      currentMediaElement.pause();
-    };
-  }, [props.file]);
 
   if (!isKnownMediaFile) {
     return null;
@@ -68,7 +52,7 @@ export function MediaPlayer(props: MediaPlayerProps) {
           {props.file.name}
         </Text>
 
-        <MediaElement controls ref={mediaPlayerRef as any}>
+        <MediaElement controls ref={props.mediaPlayerRef as any}>
           <source
             src={`/api/file?path=${encodeURIComponent(props.file.path)}`}
             type={props.file.mimeType}

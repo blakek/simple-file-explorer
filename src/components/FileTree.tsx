@@ -17,17 +17,17 @@ export interface FileTreeProps {
   selectedFile?: FSNode;
 }
 
-const FileDetails = styled.div<{ depth: number; isSelected?: boolean }>`
+const FileDetails = styled.div<{ $depth: number; $isSelected?: boolean }>`
   align-items: center;
   cursor: pointer;
   display: flex;
   gap: 0.5rem;
   list-style: none;
   padding: 0.25rem 1rem;
-  padding-left: ${(props) => (props.depth + 1) * 1.2}rem;
+  padding-left: ${(props) => (props.$depth + 1) * 1.2}rem;
 
   ${(props) =>
-    props.isSelected &&
+    props.$isSelected &&
     css`
       background-color: ${props.theme.colors.primary};
       color: ${props.theme.colors.onPrimary};
@@ -50,7 +50,7 @@ export function File(props: FileProps) {
   return (
     <Link href={props.file.path} scroll={false}>
       <FileWrapper>
-        <FileDetails depth={props.depth} isSelected={props.isSelected}>
+        <FileDetails $depth={props.depth} $isSelected={props.isSelected}>
           <FileIcon file={props.file} isSelected={props.isSelected} />
           <Text maxLineCount={1}>{props.file.name}</Text>
         </FileDetails>

@@ -58,16 +58,19 @@ async function getFileTreeRecursive(
   };
 
   if (isDirectory) {
-    const childNodes = await fs.readdir(filePath, { withFileTypes: true });
+    let childNodes = await fs.readdir(filePath, { withFileTypes: true });
 
+    // Filter out dotfiles
+    childNodes = childNodes.filter((child) => !child.name.startsWith("."));
+
+    // Sort
+    childNodes.sort((a, b) =>
+      a.name.localeCompare(b.name, "en-US", { numeric: true })
+    );
+
+    // Recursively build each child's FSNode
     node.children = await Promise.all(
-      childNodes.flatMap((child) => {
-        if (child.name.startsWith(".")) {
-          return [];
-        }
-
-        return getFileTreeRecursive(child, filePath);
-      })
+      childNodes.map((child) => getFileTreeRecursive(child, filePath))
     );
   }
 

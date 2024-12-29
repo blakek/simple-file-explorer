@@ -26,12 +26,12 @@
     "node": ">=18.x"
   },
   "scripts": {
-    "build": "bun exec --bun next build",
-    "dev": "bun exec --bun next dev",
+    "build": "bun x --bun next build",
+    "dev": "bun x --bun next dev",
     "format-check": "prettier --check .",
     "format": "prettier --write .",
     "lint": "eslint . --ext .ts,.tsx",
-    "start": "bun exec --bun next start",
+    "start": "bun x --bun next start",
     "typecheck": "tsc --noEmit",
     "validate": "bun format-check && bun typecheck && bun lint"
   }

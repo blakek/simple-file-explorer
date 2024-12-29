@@ -98,6 +98,18 @@ export default function Home(
         },
       },
       {
+        test: "p",
+        handler: () => {
+          const player = mediaPlayerRef.current;
+          if (!player) return;
+          if (document.pictureInPictureElement) {
+            document.exitPictureInPicture();
+          } else if (player instanceof HTMLVideoElement) {
+            player.requestPictureInPicture();
+          }
+        },
+      },
+      {
         test: "s",
         handler: () => {
           const player = mediaPlayerRef.current;

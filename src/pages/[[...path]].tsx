@@ -140,6 +140,14 @@ export default function Home(
     mediaPlayerRef.current?.load();
     mediaPlayerRef.current?.play();
 
+    if (document.pictureInPictureElement) {
+      document.exitPictureInPicture();
+    }
+
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    }
+
     return () => {
       mediaPlayerRef.current?.pause();
     };

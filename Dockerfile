@@ -16,4 +16,4 @@ ENV FS_ROOT=/app
 CMD ["bun", "run", "start"]
 
 # Example test command to build and run the container locally:
-# podman build -t simple-file-explorer . && podman run -e FS_ROOT="/app" -p 3000:3000 --detach -v $HOME/Desktop/backup-dump/exports/:/app:ro simple-file-explorer
+# podman build -t simple-file-explorer . && podman run -e FS_ROOT="/app" -p 9000:3000 --detach -v $HOME/Desktop/backup-dump/exports/:/app:ro simple-file-explorer

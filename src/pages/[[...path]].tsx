@@ -1,7 +1,7 @@
 import { Container } from "@gsandf/ui";
 import { FileTree } from "components/FileTree";
 import { MediaPlayer } from "components/MediaPlayer";
-import { getFileTree, resolvePath } from "lib/server-utils";
+import { getFileTree, getSelectedFile, resolvePath } from "lib/server-utils";
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 import * as React from "react";
@@ -16,13 +16,9 @@ export default function Home(
 ) {
   const router = useRouter();
 
-  const selectedFile = props.pathParts.reduce((tree, pathPart) => {
-    return tree.children?.find((child) => child.name === pathPart) ?? tree;
-  }, props.fileTree);
-
-  const title = selectedFile.isDirectory
-    ? selectedFile.path
-    : selectedFile.name;
+  const title = props.selectedFile.isDirectory
+    ? props.selectedFile.path
+    : props.selectedFile.name;
 
   const mediaPlayerRef = React.useRef<HTMLMediaElement | null>(null);
 
@@ -135,7 +131,7 @@ export default function Home(
     return () => {
       mediaPlayerRef.current?.pause();
     };
-  }, [selectedFile]);
+  }, [props.selectedFile]);
 
   return (
     <BasicLayout title={title}>
@@ -145,12 +141,12 @@ export default function Home(
             depth={0}
             key={file.path}
             fileTree={file}
-            selectedFile={selectedFile}
+            selectedFile={props.selectedFile}
           />
         ))}
       </Container>
 
-      <MediaPlayer file={selectedFile} mediaPlayerRef={mediaPlayerRef} />
+      <MediaPlayer file={props.selectedFile} mediaPlayerRef={mediaPlayerRef} />
     </BasicLayout>
   );
 }
@@ -158,12 +154,16 @@ export default function Home(
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const path = resolvePath(context.resolvedUrl);
   const pathParts = (context.query.path ?? []) as string[];
+  const fileTree = await getFileTree();
+
+  const selectedFile = getSelectedFile(fileTree, pathParts);
 
   return {
     props: {
       path,
       pathParts,
-      fileTree: await getFileTree(),
+      fileTree,
+      selectedFile,
     },
   };
 }

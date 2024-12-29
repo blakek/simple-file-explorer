@@ -85,3 +85,9 @@ export async function getFileTree(): Promise<FSNode> {
 
   return fileTreeCache.get(fsRoot)!;
 }
+
+export function getSelectedFile(fileTree: FSNode, pathParts: string[]) {
+  return pathParts.reduce((tree, pathPart) => {
+    return tree.children?.find((child) => child.name === pathPart) ?? tree;
+  }, fileTree);
+}

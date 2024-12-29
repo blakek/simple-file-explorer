@@ -22,6 +22,16 @@ export default function Home(
 
   const mediaPlayerRef = React.useRef<HTMLMediaElement | null>(null);
 
+  const closeMediaPlayer = React.useCallback(() => {
+    const player = mediaPlayerRef.current;
+    if (!player) return;
+    // Unset the selected file which will hide the media player
+    const currentPathParts = router.query.path as string[];
+    const parentPathParts = currentPathParts.slice(0, -1);
+    const parentPath = `/${parentPathParts.join("/")}`;
+    router.push(parentPath);
+  }, [router]);
+
   const shortcuts = React.useMemo<ShortcutRule[]>(() => {
     return [
       {
@@ -66,16 +76,7 @@ export default function Home(
       },
       {
         test: "Escape",
-        handler: () => {
-          const player = mediaPlayerRef.current;
-          if (!player) return;
-
-          // Unset the selected file which will hide the media player
-          const currentPathParts = router.query.path as string[];
-          const parentPathParts = currentPathParts.slice(0, -1);
-          const parentPath = `/${parentPathParts.join("/")}`;
-          router.push(parentPath);
-        },
+        handler: closeMediaPlayer,
       },
       {
         test: "f",
@@ -166,7 +167,11 @@ export default function Home(
         ))}
       </Container>
 
-      <MediaPlayer file={props.selectedFile} mediaPlayerRef={mediaPlayerRef} />
+      <MediaPlayer
+        file={props.selectedFile}
+        mediaPlayerRef={mediaPlayerRef}
+        onClose={closeMediaPlayer}
+      />
     </BasicLayout>
   );
 }

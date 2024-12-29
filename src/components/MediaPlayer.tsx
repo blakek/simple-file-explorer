@@ -1,11 +1,13 @@
 import { Box, Stack, Text } from "@gsandf/ui";
 import { FileType, FSNode } from "lib/types";
 import * as React from "react";
+import * as Icon from "react-icons/fi";
 import styled from "styled-components";
 
 export interface MediaPlayerProps {
   file: FSNode;
   mediaPlayerRef: React.RefObject<HTMLAudioElement | HTMLVideoElement | null>;
+  onClose?: () => void;
 }
 
 const AudioPlayer = styled.audio``;
@@ -32,6 +34,21 @@ const Bar = styled(Stack)`
   }
 `;
 
+const CloseButton = styled("button")`
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0;
+`;
+
+const TitleArea = styled(Stack)`
+  align-items: baseline;
+  flex-direction: row;
+  gap: 0.5rem;
+`;
+
 export function MediaPlayer(props: MediaPlayerProps) {
   const isKnownMediaFile =
     props.file.type === FileType.Audio || props.file.type === FileType.Video;
@@ -48,9 +65,15 @@ export function MediaPlayer(props: MediaPlayerProps) {
       <Box $height="calc(40vmin + 5rem)" $width="full" />
 
       <Bar>
-        <Text $fontSize={3} $fontWeight="bolder">
-          {props.file.name}
-        </Text>
+        <TitleArea>
+          <CloseButton onClick={props.onClose}>
+            <Icon.FiX />
+          </CloseButton>
+
+          <Text $fontSize={3} $fontWeight="bolder">
+            {props.file.name}
+          </Text>
+        </TitleArea>
 
         <MediaElement controls ref={props.mediaPlayerRef as any}>
           <source
